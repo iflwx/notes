@@ -102,21 +102,114 @@ python -m http.server 8080
 
 ### 六、常用软件
 
+#### 1.c
+
 ```shell
-# c
 pkg install clang
-# python
+```
+
+#### 2.python
+
+```shell
 pkg install python
 pkg install vim-python
-# node
-pkg install nodejs-lts
-# go
-pkg install golang
-# nginx
-pkg install nginx
+pip install ipython
+
+# 安装 jupyter notebook
+pkg update
+pkg install proot
+termux-chroot
+apt install git clang
+apt install pkg-config
+apt install python
+apt install libzmq
+apt install ipython 
+pip install jupyter
+
+#安装科学计算
+pip install numpy pandas matplotlib
+```
+
+测试
+
+```python
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+x = np.arange(100)
+y = [i ** 2 for i in x]
+plt.plot(x, y)
+plt.show()
 ```
 
 
+
+#### 3.node
+
+```shell
+pkg install nodejs-lts
+```
+
+#### 4.go
+
+```shell
+pkg install golang
+```
+
+#### 5.nginx
+
+```shell
+pkg install nginx
+```
+配置文件为：/data/data/com.termux/files/usr/etc/nginx/nginx.conf
+
+在配置文件的最上方添加
+```ini
+load_module '/usr/lib64/nginx/modules/ngx_stream_module.so';
+```
+并加上
+```ini
+events {
+    worker_connections  1024;
+}
+stream { 
+	#stream模块，就跟http模块一样 
+	upstream ssh {
+		server 192.168.169.10:22;   #这里IP是虚拟机的，对应虚拟机的IP+Port
+	}
+	server { 
+		#里面可以有多个监听服务
+		#配置监听端口和代理的ip和端口就可以进行tcp代理了。 
+		listen 9922;  #外层通信需要的tcp端口
+		proxy_pass ssh;
+		proxy_connect_timeout 1h;
+		proxy_timeout 1h;
+	}
+}
+```
+
+可能需要
+```shell
+apt install nginx-mod-stream
+```
+然后
+```shell
+nginx -t
+nginx -s reload
+service nginx restart
+```
+
+#### 6.redis
+
+```shell
+pkg install redis
+```
+
+#### 7.git
+
+```shell
+pkg install git
+```
 
 
 
