@@ -37,5 +37,7 @@ pdf2htmlex input.pdf
 第23行，以“@font-face{font-family:ff2;src:url('data:application/font-woff;base64”开头的内容对应正常字体
 
 
+## 2. pdf转excel
 
+Acrobat自带的转换功能就已经够好了。
    
