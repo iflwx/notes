@@ -148,7 +148,7 @@ apt install git clang
 apt install pkg-config
 apt install python
 apt install libzmq
-apt install ipython 
+pip install ipython 
 pip install jupyter
 
 #安装科学计算
