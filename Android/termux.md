@@ -1,12 +1,14 @@
+# termux
+
 参考文档：https://www.sqlsec.com/2018/05/termux.html
 
-### 一、下载安装
+## 一、下载安装
 
 apk下载地址：https://f-droid.org/packages/com.termux/
 
 源码：https://github.com/termux/termux-app
 
-### 二、基本命令
+## 二、基本命令
 
 ```shell
 pkg update   #更新数据源。中间会有停顿询问，直接按回车即可。
@@ -15,7 +17,9 @@ pkg install [package name]   #包安装
 pkg uninstall [package name] #包缷载
 ```
 
-### 三、ipad上远程连接Android
+## 三、ssh远程连接
+
+### 1.ipad上远程连接
 
 Android上，先安装并启动sshd
 
@@ -43,7 +47,19 @@ Password: 上一步passwd命令设置的密码
 
 注意：Android端要允许termux获取wakelock并在前台，ipad端保存termius在前台，否则连接容易断开。
 
-### 四、允许访问手机存储
+### 2.PC上远程连接
+
+Android端操作与上同。
+
+PC端通过adb连接到手机后，执行如下指令
+
+```
+adb forward tcp:8022 tcp:8022
+```
+
+然后通过putty访问localhost:8022即可，细节配置参见上一节。
+
+## 四、允许访问手机存储
 
 ```shell
 # Android6.0以上会弹框确认是否授权，点击"始终允许"后Termux即可访问手机上的文件
@@ -56,7 +72,7 @@ termux-setup-storage
 
 2.授权后，storage文件夹下包含了内置存储的几个文件夹，包括：dcim, downloads, movies, music, pictures, shared。storage下的external-1文件夹对应了外置SD卡上的Android/data/com.termux/files文件夹。
 
-### 五、ngrok内网穿透
+## 五、ngrok内网穿透
 
 1.建立隧道
 
@@ -104,6 +120,7 @@ python -m http.server 8080
 5.绑定腾讯云域名
 
 在腾讯云域名网站上，在已实名认证过的域名iflwx.top下，添加一条记录。内容为：
+
 ```ini
 主机记录: @    #可为www, abc等，为@则直接使用iflwx.top访问
 记录类型: CNAME
@@ -125,15 +142,15 @@ http验证用户名/密码: 为空即可
 
 确认后，在"隧道管理"中查看状态。
 
-### 六、常用软件
+## 六、常用软件
 
-#### 1.c
+**1.c**
 
 ```shell
 pkg install clang
 ```
 
-#### 2.python
+**2.python**
 
 ```shell
 pkg install python
@@ -167,32 +184,34 @@ plt.plot(x, y)
 plt.show()
 ```
 
-
-
-#### 3.node
+**3.node**
 
 ```shell
 pkg install nodejs-lts
 ```
 
-#### 4.go
+**4.go**
 
 ```shell
 pkg install golang
 ```
 
-#### 5.nginx
+**5.nginx**
 
 ```shell
 pkg install nginx
 ```
+
 配置文件为：/data/data/com.termux/files/usr/etc/nginx/nginx.conf
 
 在配置文件的最上方添加
+
 ```ini
 load_module '/usr/lib64/nginx/modules/ngx_stream_module.so';
 ```
+
 并加上
+
 ```ini
 events {
     worker_connections  1024;
@@ -214,27 +233,27 @@ stream {
 ```
 
 可能需要
+
 ```shell
 apt install nginx-mod-stream
 ```
+
 然后
+
 ```shell
 nginx -t
 nginx -s reload
 service nginx restart
 ```
 
-#### 6.redis
+**6.redis**
 
 ```shell
 pkg install redis
 ```
 
-#### 7.git
+**7.git**
 
 ```shell
 pkg install git
 ```
-
-
-
